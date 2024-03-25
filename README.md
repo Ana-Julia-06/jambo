@@ -1,2 +1,2 @@
-# django-project
-repositório do projeto django psi
+# jambo
+repositório de jambos

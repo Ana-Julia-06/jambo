@@ -1,7 +1,16 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 from loja.models import Produto
 from datetime import timedelta, datetime
 from django.utils import timezone
+def edit_produto_view(request, id=None):
+    produtos = Produto.objects.all()
+    if id is not None:
+        produtos = produtos.filter(id=id)
+    produto = produtos.first()
+    print(produto)
+    context = { 'produto': produto }
+    return render(request, template_name='produto/produto-edit.html', context=context, status=200)
+    
 def list_produto_view(request, id=None):
     produto = request.GET.get("produto")
     destaque = request.GET.get("destaque")
@@ -24,10 +33,6 @@ def list_produto_view(request, id=None):
         produtos = produtos.filter(categoria__categoria=categoria)
     if fabricante is not None:
         produtos = produtos.filter(fabricante__fabricante=fabricante)
-    if id is not None:
-        produtos = produtos.filter(id=id)
-    print(produtos)
-    if id is None:
-        return HttpResponse('<h1>Nenhum id foi informado</h1>')
-    return HttpResponse('<h1>Produto de id %s!</h1>' % id)
+    context = { 'produtos': produtos }
+    return render(request, template_name='produto/produto.html', context=context, status=200)
     

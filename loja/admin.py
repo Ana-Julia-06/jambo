@@ -16,7 +16,7 @@ class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('produto', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria',)
     empty_value_display = 'Sem promoção'
     search_fields = ('produto',)
-    fields = ('produto', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria', 'fabricante',)
+    fields = ('produto', 'destaque', 'promocao', 'msgPromocao', 'preco', 'categoria', 'fabricante', 'image')
 
 admin.site.register(Fabricante, FabricanteAdmin) #adiciona a interface do adm
 admin.site.register(Categoria, CategoriaAdmin)

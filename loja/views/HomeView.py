@@ -5,7 +5,5 @@ def home_view(request):
     produtos = Produto.objects.all()
     if produto is not None:
         produtos = produtos.filter(produto__contains=produto)
-    context = {
-        'produtos': produtos
-    }
+    context = { 'produtos': produtos }
     return render(request, template_name='home/home.html', context=context, status=200)

@@ -1,14 +1,18 @@
 from django.shortcuts import render, redirect
-from loja.models import Produto
+from loja.models import Produto, Fabricante, Categoria
 from datetime import timedelta, datetime
 from django.utils import timezone
+from django.core.files.storage import FileSystemStorage
+
 def edit_produto_view(request, id=None):
     produtos = Produto.objects.all()
     if id is not None:
         produtos = produtos.filter(id=id)
     produto = produtos.first()
     print(produto)
-    context = { 'produto': produto }
+    Fabricantes = Fabricante.objects.all()
+    Categorias = Categoria.objects.all()
+    context = { 'produto': produto, 'fabricantes': Fabricantes, 'categorias': Categorias}
     return render(request, template_name='produto/produto-edit.html', context=context, status=200)
     
 def list_produto_view(request, id=None):
@@ -68,5 +72,69 @@ def details_produto_view(request, id=None):
         produtos = produtos.filter(id=id)
     produto = produtos.first()
     print(produto)
-    context = {‘produto': produto}
+    context = {'produto': produto}
     return render(request, template_name='produto/produto-details.html', context=context, status=200)
+
+def delete_produto_view(request, id=None):
+    produtos = Produto.objects.all()
+    if id is not None:
+        produtos = produtos.filter(id=id)
+    produto = produtos.first()
+    print(produto)
+    context = {'produto': produto}
+    return render(request, template_name='produto/produto-delete.html', context=context, status=200)
+
+def delete_produto_postback(request, id=None):
+    if request.method == 'POST':
+        id = request.POST.get("id")
+        produto = request.POST.get("produto")
+        print("postback-delete")
+        print(id)
+        try:
+            Produto.objects.filter(id=id).delete()
+            print("Produto %s excluído com sucesso" % produto)
+        except Exception as e:
+            print("Erro salvando edição de produto: %s" % e)
+    return redirect("/produto")
+
+def create_produto_view(request, id=None):
+    if request.method == 'POST':
+        produto = request.POST.get("produto")
+        destaque = request.POST.get("destaque")
+        promocao = request.POST.get("promocao")
+        msgPromocao = request.POST.get("msgPromocao")
+        preco = request.POST.get("preco")
+        image = request.POST.get("image")
+        print("postback-create")
+        print(destaque)
+        print(promocao)
+        print(msgPromocao)
+        print(preco)
+        print(image)
+        try:
+            obj_produto = Produto()
+            obj_produto.Produto = produto
+            obj_produto.destaque = (destaque is not None)
+            obj_produto.promocao = (promocao is not None)
+            if msgPromocao is not None:
+                obj_produto.msgPromocao = msgPromocao
+            obj_produto.preco = 0
+            if (preco is not None) and (preco != ""):
+                obj_produto.preco = preco
+            obj_produto.criado_em = timezone.now()
+            obj_produto.alterado_em = obj_produto.criado_em
+            if request.FILES is not None:
+                num_files = len(request.FILES.getlist('image'))
+                if num_files > 0:
+                    imagefile = request.FILES['image']
+                    print(imagefile)
+                    fs = FileSystemStorage()
+                    filename = fs.save(imagefile.name, imagefile)
+                    if (filename is not None) and (filename != ""):
+                        obj_produto.image = filename
+            obj_produto.save()
+            print("Produto %s salvo com sucesso" % produto)
+        except Exception as e:
+            print("Erro inserindo produto: %s" % e)
+        return redirect("/produto")
+    return render(request, template_name='produto/produto-create.html', status=200)

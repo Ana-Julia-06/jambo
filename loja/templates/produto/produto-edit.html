@@ -44,9 +44,9 @@
                     <option value="-1">-----</option>
                     {% for cate in categorias %}
                         {% if produto.categoria_id == cate.id %}
-                        <option value="{{cate.id}}" selected>{{cate.Categoria}}</option>
+                            <option value="{{cate.id}}" selected>{{cate.categoria}}</option>
                         {% else %}
-                        <option value="{{cate.id}}">{{cate.Categoria}}</option>
+                            <option value="{{cate.id}}">{{cate.categoria}}</option>
                         {% endif %}
                     {% endfor %}
                 </select>
@@ -57,9 +57,9 @@
                     <option value="-1">-----</option>
                     {% for fabri in fabricantes %}
                         {% if produto.fabricante_id == fabri.id %}
-                        <option value="{{fabri.id}}" selected>{{fabri.Fabricante}}</option>
+                            <option value="{{fabri.id}}" selected>{{fabri.fabricante}}</option>
                         {% else %}
-                        <option value="{{fabri.id}}">{{fabri.Fabricante}}</option>
+                            <option value="{{fabri.id}}">{{fabri.fabricante}}</option>
                         {% endif %}
                     {% endfor %}
                 </select>

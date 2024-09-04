@@ -38,6 +38,36 @@
                 <label for="msgPromocao" class="col-md-2">Msg Promoção</label>
                 <input value="{{produto.msgPromocao}}" name="msgPromocao" disabled>
             </div>
+            <div class="row mt-2">
+                <label for="preco" class="col-md-2">Preço</label>
+                <input value="{{produto.preco}}" name="preco" disabled>
+            </div>
+            <div class="row mt-2">
+                <label for="CategoriaFk" class="col-md-2">Categoria</label>
+                <select name="CategoriaFk" disabled>
+                    <option value="-1">-----</option>
+                    {% for cate in categorias %}
+                        {% if produto.categoria_id == cate.id %}
+                            <option value="{{cate.id}}" selected>{{cate.categoria}}</option>
+                        {% else %}
+                            <option value="{{cate.id}}">{{cate.categoria}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="row mt-2">
+                <label for="FabricanteFk" class="col-md-2">Fabricante</label>
+                <select name="FabricanteFk" disabled>
+                    <option value="-1">-----</option>
+                    {% for fabri in fabricantes %}
+                        {% if produto.fabricante_id == fabri.id %}
+                            <option value="{{fabri.id}}" selected>{{fabri.fabricante}}</option>
+                        {% else %}
+                            <option value="{{fabri.id}}">{{fabri.fabricante}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
             <div class="row">
                 <button type="submit" class="btn btn-danger col-md-2 mt-3 mr-2"><i class="fa
                 fa-check"></i> Excluir</button>

@@ -38,8 +38,12 @@
                 <label for="msgPromocao" class="col-md-2">Msg Promoção</label>
                 <input value="{{produto.msgPromocao}}" name="msgPromocao">
             </div>
-            <div class="row">
-                <label for="CategoriaFk" class="col-md-2">Categorias</label>
+            <div class="row mt-2">
+                <label for="preco" class="col-md-2">Preço</label>
+                <input value="{{produto.preco}}" name="preco">
+            </div>
+            <div class="row mt-2">
+                <label for="CategoriaFk" class="col-md-2">Categoria</label>
                 <select name="CategoriaFk">
                     <option value="-1">-----</option>
                     {% for cate in categorias %}
@@ -51,8 +55,8 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="row">
-                <label for="FabricanteFk" class="col-md-2">Fabricantes</label>
+            <div class="row mt-2">
+                <label for="FabricanteFk" class="col-md-2">Fabricante</label>
                 <select name="FabricanteFk">
                     <option value="-1">-----</option>
                     {% for fabri in fabricantes %}

@@ -8,3 +8,8 @@ from django.dispatch import receiver
 from .fabricante import Fabricante
 from .categoria import Categoria
 from .produto import Produto
+PERFIL = (
+    (1, 'Admin'),
+    (2, 'Usuario')
+)
+from .usuario import Usuario

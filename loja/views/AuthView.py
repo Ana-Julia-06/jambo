@@ -34,7 +34,7 @@ def register_view(request):
         registerForm = RegisterForm(request.POST)
 
         if registerForm.is_valid():
-            verifyUSername = User.objects.filter(username=username).first()
+            verifyUsername = User.objects.filter(username=username).first()
             verifyEmail = User.objects.filter(email=email).first()
 
             if verifyUsername is not None:
@@ -44,4 +44,8 @@ def register_view(request):
             else:
                 user = User.objects.create_user(username, email, password)
                 if user is not None:
-                    message = {'type': 'succes', 'text': 'Conta criada com sucessp!'}
+                    message = {'type': 'success', 'text': 'Conta criada com sucesso!'}
+                else:
+                    message = {'type': 'danger', 'text': 'Um erro ocorreu ao tentar criar o usuário.'}
+    context = {'form': registerForm, 'message': message, 'title': 'Registrar', 'button_text': 'Registrar', 'link_text': 'Login', 'link_href': '/login'}
+    return render(request, template_name='auth/auth.html', context=context, status=200)

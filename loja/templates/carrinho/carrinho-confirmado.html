@@ -18,6 +18,23 @@
             <div class="alert alert-info">
                 <h5 class="mt-4">Total: R$ {{carrinho.total|floatformat:2}}</h5>
             </div>
+            <div class="mt-4">
+                <h4>Detalhes dos Produtos</h4>
+                <div class="row">
+                    <div class="col-md-4"><strong>Produto</strong></div>
+                    <div class="col-md-2"><strong>Quantidade</strong></div>
+                    <div class="col-md-2"><strong>Preço Unitário</strong></div>
+                    <div class="col-md-2"><strong>Total</strong></div>
+                </div>
+                {% for item in carrinho.itens.all %}
+                <div class="row">
+                    <div class="col-md-4">{{ item.produto.produto }}</div>
+                    <div class="col-md-2">{{ item.quantidade }}</div>
+                    <div class="col-md-2">R$ {{ item.preco|floatformat:2 }}</div>
+                    <div class="col-md-2">R$ {{ item.total|floatformat:2 }}</div>
+                </div>
+                {% endfor %}
+            </div>
         {% else %}
             <div class="alert alert-warning mt-4" role="alert">
                 Seu carrinho não foi finalizado.

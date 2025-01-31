@@ -121,3 +121,26 @@ def remover_item_view(request, item_id):
     if carrinho_id == item.carrinho.id:
         item.delete()
     return redirect('/carrinho')
+
+#função para aumentar a quantidade de um produto no carrinho
+
+def aumentar_quantidade_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    carrinho_id = request.session.get('carrinho_id')
+    if carrinho_id == item.carrinho.id:
+        item.quantidade += 1
+        item.save()
+    
+    return redirect('/carrinho')
+
+#função para diminuir a quantidade de um produto no carrinho
+
+def diminuir_quantidade_view(request, item_id):
+    item = get_object_or_404(CarrinhoItem, id=item_id)
+    carrinho_id = request.session.get('carrinho_id')
+    if carrinho_id == item.carrinho.id:
+        if item.quantidade > 1:
+            item.quantidade -= 1
+            item.save()
+    
+    return redirect('/carrinho')

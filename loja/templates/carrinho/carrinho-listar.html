@@ -20,12 +20,27 @@
             {% for item in itens %}
             <div class="row">
                 <a class="col-md-4">{{item.produto.produto}}</a>
-                <a class="col-md-2">{{item.quantidade}}</a>
+                <a class="col-md-2">
+                    <form method="POST" action="{% url 'diminuir_quantidade' item.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button style="background-color: transparent; color: inherit; border: none; cursor: pointer; outline: none;" {% if item.quantidade <= 1 %}disabled{% endif %}>
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </form>
+                    {{ item.quantidade }} 
+                    <form method="POST" action="{% url 'aumentar_quantidade' item.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button style="background-color: transparent; color: inherit; border: none; cursor: pointer; outline: none;">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </form>
+                </a>
                 <a class="col-md-2">{{item.preco|floatformat:2}}</a>
                 <a class="col-md-2">{{item.total}}</a>
                 <a class="col-md-2">
                     <form method="POST" action="{% url 'remover_carrinhoitem' item.id %}" style="display: inline;">
-                        {% csrf_token %} <button type="submit" class="btn btn-danger">Excluir</button>
+                        {% csrf_token %} 
+                        <button type="submit" class="btn btn-danger">Excluir</button>
                     </form>
                 </a>
             </div>    

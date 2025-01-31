@@ -9,3 +9,5 @@ from .fabricante import Fabricante
 from .categoria import Categoria
 from .produto import Produto
 from .usuario import Usuario
+from .carrinho import Carrinho
+from .carrinho import CarrinhoItem
